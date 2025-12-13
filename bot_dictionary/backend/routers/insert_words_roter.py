@@ -6,8 +6,6 @@ from bot_dictionary.backend.db.dependency import get_db_service
 
 insert_router = APIRouter(tags=["insert_words"])
 
-add_word = DBManager()
-
 
 
 @insert_router.post('/insert_words')

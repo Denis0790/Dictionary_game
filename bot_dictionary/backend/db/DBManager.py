@@ -20,8 +20,9 @@ class DBManager:
     async def create_table(self):
         await self.cursor.execute('''CREATE TABLE IF NOT EXISTS Words (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        word_en TEXT NOT NULL,
-        word_ru TEXT NOT NULL)
+        word_en TEXT NOT NULL UNIQUE,
+        word_ru TEXT NOT NULL UNIQUE
+        )
          ''')
 
     async def insert_word(self, words: DictionaryModel):
@@ -31,7 +32,9 @@ class DBManager:
         await self.conn.commit()
 
     async def get_random_all_words(self):
-        pass
+        await self.cursor.execute("SELECT * FROM Words ORDER BY RANDOM()")
+        all_words = await self.cursor.fetchall()
+        return all_words
 
     async def check_word(self, word_ru):
         pass
