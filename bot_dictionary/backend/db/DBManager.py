@@ -1,11 +1,9 @@
 import aiosqlite
-import asyncio
 from bot_dictionary.backend.data.model_pydantic import DictionaryModel
 
 
 class DBManager:
     def __init__(self, db_name = 'database.db'):
-
         self.db_name = db_name
         self.cursor = None
         self.conn = None
@@ -28,16 +26,26 @@ class DBManager:
     async def insert_word(self, words: DictionaryModel):
         add_word = 'INSERT INTO Words (word_en, word_ru) VALUES (?, ?)'
         values = (words.word_en, words.word_ru)
-        await self.cursor.execute(add_word, values)
-        await self.conn.commit()
+        try:
+            await self.cursor.execute(add_word, values)
+            await self.conn.commit()
+        except aiosqlite.IntegrityError:
+            return  None
 
     async def get_random_all_words(self):
-        await self.cursor.execute("SELECT * FROM Words ORDER BY RANDOM()")
+        await self.cursor.execute("SELECT word_en, word_ru FROM Words ORDER BY RANDOM()")
         all_words = await self.cursor.fetchall()
         return all_words
 
-    async def check_word(self, word_ru):
-        pass
+    async def check_word(self, word_en: str):
+        query = "SELECT word_en, word_ru FROM Words WHERE word_en = ?"
+        await self.cursor.execute(query, (word_en,))
+        result = await self.cursor.fetchone()
+        if result is not None:
+            return result
+        else:
+            return None
+
 
     async def close(self):
         if self.conn:
