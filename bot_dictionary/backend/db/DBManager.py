@@ -37,15 +37,6 @@ class DBManager:
         all_words = await self.cursor.fetchall()
         return all_words
 
-    async def check_word(self, word_en: str):
-        query = "SELECT word_en, word_ru FROM Words WHERE word_en = ?"
-        await self.cursor.execute(query, (word_en,))
-        result = await self.cursor.fetchone()
-        if result is not None:
-            return result
-        else:
-            return None
-
 
     async def close(self):
         if self.conn:
