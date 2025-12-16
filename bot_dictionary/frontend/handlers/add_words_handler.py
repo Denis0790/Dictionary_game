@@ -2,7 +2,7 @@ from aiogram import types, F
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 
-from bot_dictionary.frontend.services.api import add_words_in_backend
+from bot_dictionary.frontend.services.api_add_word import add_words_in_backend
 from bot_dictionary.frontend.states.states import AddStates
 add_words_router = Router()
 
