@@ -11,7 +11,7 @@ insert_router = APIRouter(tags=["insert_words"])
 @insert_router.post('/insert_words')
 async def insert_words(words: DictionaryModel, db_manager: DBManager = Depends(get_db_service)):
     await db_manager.insert_word(words)
-    if words is not None:
+    if words is None:
         return f"Это слово уже есть в словаре."
     else:
-        return {'words': 'inserted'}
+        return 'Слова успешно добавлены в словарь!'

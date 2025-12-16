@@ -2,6 +2,7 @@ from aiogram import types, F
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 
+from bot_dictionary.frontend.services.api import add_words_in_backend
 from bot_dictionary.frontend.states.states import AddStates
 add_words_router = Router()
 
@@ -24,7 +25,7 @@ async def command_add_ru(message: types.Message, state: FSMContext) -> None:
     data = await state.get_data()
     english_word = data.get("en_word")
     russian_word = data.get("ru_word")
-    #передача в фастапи
-    await message.answer(f"Добавлены в словарь слова: {english_word} ({russian_word})")
+    answer_add = await add_words_in_backend(english_word, russian_word)
+    await message.answer(f'{answer_add}')
 
     await state.clear()
