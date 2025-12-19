@@ -37,6 +37,17 @@ class DBManager:
         all_words = await self.cursor.fetchall()
         return all_words
 
+    async def delete_word_in_db(self, word_en):
+        delete_word = 'DELETE FROM Words WHERE word_en = ?'
+        values = (word_en,)
+        try:
+            await self.cursor.execute(delete_word, values)
+            await self.conn.commit()
+            return True
+        except aiosqlite.IntegrityError:
+            return  None
+
+
 
     async def close(self):
         if self.conn:

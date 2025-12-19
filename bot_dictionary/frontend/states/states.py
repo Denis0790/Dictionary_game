@@ -7,3 +7,6 @@ class AddStates(StatesGroup):
 class CheckStates(StatesGroup):
     try_word = State()
     words_test = State()
+
+class DeleteWord(StatesGroup):
+    word_en = State()
