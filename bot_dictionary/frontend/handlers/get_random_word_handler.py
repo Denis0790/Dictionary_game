@@ -1,3 +1,6 @@
+import asyncio
+import time
+
 from aiogram import types, F
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
@@ -7,6 +10,7 @@ from bot_dictionary.frontend.states.states import CheckStates
 
 get_random_word_router = Router()
 
+@get_random_word_router.message(F.text == "📝 Начать тест")
 @get_random_word_router.message(F.text == "/get_random")
 async def get_random_word(message: types.Message, state: FSMContext):
     result = await get_random_word_in_db()
@@ -23,6 +27,7 @@ async def get_random_word(message: types.Message, state: FSMContext):
         await message.answer("Произошла ошибка при получении слова.")
 
 
+@get_random_word_router.message(F.text == "🛑 Остановить тест")
 @get_random_word_router.message(F.text == "/stop_test")
 async def stop_test(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
@@ -45,6 +50,7 @@ async def get_answer_for_check(message: types.Message, state: FSMContext):
 
     if try_word == words_test:
         await message.answer(f"Верно!")
+        await asyncio.sleep(1)
         await get_random_word(message, state)
     else:
         await message.answer(f"Неверно! Попробуй еще раз: ")

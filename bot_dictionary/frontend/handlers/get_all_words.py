@@ -5,6 +5,7 @@ from bot_dictionary.frontend.services.api_get_all_words import get_all_words_in_
 
 get_all_words_router = Router()
 
+@get_all_words_router.message(F.text == "📚 Мой словарь")
 @get_all_words_router.message(F.text == "/get_all")
 async def get_all_words(message: types.Message):
     result = await get_all_words_in_backend()

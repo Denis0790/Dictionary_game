@@ -6,7 +6,7 @@ from bot_dictionary.frontend.services.api_add_word import add_words_in_backend
 from bot_dictionary.frontend.states.states import AddStates
 add_words_router = Router()
 
-
+@add_words_router.message(F.text == "➕ Добавить слово")
 @add_words_router.message(F.text == "/add")
 async def command_start_add_handler(message: types.Message, state: FSMContext):
     await message.answer(f"Для того, что бы запомнить слова, впиши сначала на английском и отправь мне:")
