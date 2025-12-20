@@ -10,7 +10,6 @@ async def delete_word_api(en_word: str):
 
     try:
         async with aiohttp.ClientSession() as session:
-            print(en_word)
             async with session.delete(url, params=params, timeout=5) as response:
                 result_data = await response.json()
                 if response.status in [200, 201]:

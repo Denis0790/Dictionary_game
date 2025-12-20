@@ -10,3 +10,6 @@ class CheckStates(StatesGroup):
 
 class DeleteWord(StatesGroup):
     word_en = State()
+
+class QuizState(StatesGroup):
+    waiting_for_answer = State()

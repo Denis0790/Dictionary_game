@@ -23,8 +23,8 @@ async def command_add_ru(message: types.Message, state: FSMContext) -> None:
     await state.update_data(ru_word=message.text)
 
     data = await state.get_data()
-    english_word = data.get("en_word")
-    russian_word = data.get("ru_word")
+    english_word = data.get("en_word").lower()
+    russian_word = data.get("ru_word").lower()
     answer_add = await add_words_in_backend(english_word, russian_word)
     await message.answer(f'{answer_add}')
 

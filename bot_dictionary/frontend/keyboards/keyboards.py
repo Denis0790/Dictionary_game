@@ -7,6 +7,7 @@ def get_main_menu_kb():
     builder.button(text="📝 Начать тест")
     builder.button(text="📚 Мой словарь")
     builder.button(text="🛑 Остановить тест")
+    builder.button(text="❌ Удалить")
 
     builder.adjust(2)
 
